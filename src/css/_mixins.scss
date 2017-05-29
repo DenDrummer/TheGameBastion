@@ -1,0 +1,13 @@
+@import "variables";
+
+@mixin for-break($breakpoint) {
+  @if $breakpoint == sm {
+    @media only screen and (max-width: $sm) {
+      @content;
+    }
+  } @else if $breakpoint == xs {
+    @media only screen and (max-width: $xs) {
+      @content;
+    }
+  }
+}
