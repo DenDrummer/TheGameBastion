@@ -1,25 +1,52 @@
 @import "mixins";
 @import "variables";
 
+body{
+  padding-top: 40px;
+}
+
+h1{
+  text-align: center;
+}
+
+.hidden{
+  display: block;
+  @include for-break(md){
+    display: inline-block;
+  }
+
+  @include for-break(sm){
+    display: none;
+  }
+}
+
 .navbar {
   display: inline-block;
+  margin-bottom: 10px;
 }
 
 .twitch-stream {
-  width: 640px;
-  height: 400px;
+  width: 960px;
+  height: 540px;
   display: block;
   margin: 0 auto;
-  margin-top: 80px;
+
+  @include for-break(lg){
+    width: 800px;
+    height: 450px;
+  }
+
+  @include for-break(md){
+    width: 640px;
+    height: 400px;
+  }
 
   @include for-break(sm) {
-    margin-top: 180px;
     width: 480px;
     height: 270px;
   }
 
   @include for-break(xs) {
-    margin-top: 180px;
     width: 320px;
     height: 200px;
   }
