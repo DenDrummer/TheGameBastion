@@ -6,31 +6,42 @@ import 'bootstrap/dist/css/bootstrap.css';
 import $ from 'jquery'
 var show_navbar = false;
 
+function loadTeam() {
+    $.getJSON(`http://localhost:3000/team-members`,
+        (json) => {
+            //clear the container
+            $("#team_showcase").empty();
+
+            console.log(json);
+            var stringified = JSON.stringify(json);
+            if (stringified == "") {
+                //list does not exist
+                $("#team_showcase").css("color","red");
+                $("#team_showcase").text("It seems there is no list of team-members.");
+            }
+            else if (stringified == "[]") {
+                //list is empty
+                $("#team_showcase").css("color","red");
+                $("#team_showcase").text("It seems the list of team-members is empty.");
+            }
+            else {
+                $("#team_showcase").css("color","black");
+                $.each(json, (index, element) => {
+                    //make a div for each member
+                    //perhaps better to build an else if structure to
+                    // distinguish between admins, mods and regular streamers?
+                    $("#team_showcase").append('<div class="about">' + element.username + '</div>')
+                })
+            }
+        });
+}
+
 $(document).ready(function () {
     $(".home").show();
     $(".about").hide();
 
     //load team members
-    $.getJSON(`http://localhost:3000/team-members`,
-        (json) => {
-            console.log(json);
-            var stringified = JSON.stringify(json);
-            if (stringified == "") {
-                //list does not exist
-                $("#tmp").val("It seems there is no list of team-members.");
-            }
-            else if (stringified == "[]") {
-                //list is empty
-                $("#tmp").val("It seems the list of team-members is empty.");
-            }
-            else {
-                $.each(json, (index, element) => {
-                    $("#tmp").append($('<div>', {
-                        text: element.name
-                    }))
-                })
-            }
-        })
+    loadTeam();
 });
 
 //$(window).resize(() => {
@@ -72,3 +83,7 @@ $(".about-button").click(() => {
     $(".home").hide();
     $(".about").show();
 });
+
+$("#refresh_team_button").click(() => {
+    loadTeam();
+})

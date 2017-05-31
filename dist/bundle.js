@@ -10961,15 +10961,32 @@ __WEBPACK_IMPORTED_MODULE_2_jquery___default()(document).ready(function () {
     __WEBPACK_IMPORTED_MODULE_2_jquery___default()(".about").hide();
 
     //load team members
-
+    __WEBPACK_IMPORTED_MODULE_2_jquery___default.a.getJSON(`http://localhost:3000/team-members`,
+        (json) => {
+            console.log(json);
+            var stringified = JSON.stringify(json);
+            if (stringified == "") {
+                //list does not exist
+                __WEBPACK_IMPORTED_MODULE_2_jquery___default()("#tmp").val("It seems there is no list of team-members.");
+            }
+            else if (stringified == "[]") {
+                //list is empty
+                __WEBPACK_IMPORTED_MODULE_2_jquery___default()("#tmp").val("It seems the list of team-members is empty.");
+            }
+            else {
+                __WEBPACK_IMPORTED_MODULE_2_jquery___default.a.each(json, (index, element) => {
+                    __WEBPACK_IMPORTED_MODULE_2_jquery___default()("#tmp").append('<div class="about">' + element.username + '</div>')
+                })
+            }
+        })
 });
 
 //$(window).resize(() => {
-    //if ($(window).width() < 768) {
-        //$(".hidden").hide();
-    //} else {
-        //$(".hidden").show();
-    //}
+//if ($(window).width() < 768) {
+//$(".hidden").hide();
+//} else {
+//$(".hidden").show();
+//}
 //});
 
 __WEBPACK_IMPORTED_MODULE_2_jquery___default()(".navbar-toggle").click(() => {
@@ -10982,9 +10999,9 @@ __WEBPACK_IMPORTED_MODULE_2_jquery___default()(".navbar-toggle").click(() => {
         __WEBPACK_IMPORTED_MODULE_2_jquery___default()("#navbar").removeClass("hidden");
     }
     //if ($(window).width() < 768) {
-        //$(".hidden").hide();
+    //$(".hidden").hide();
     //} else {
-        //$(".hidden").show();
+    //$(".hidden").show();
     //}
 });
 
